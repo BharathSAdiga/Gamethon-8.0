@@ -1,0 +1,18 @@
+﻿# Visual Studio & IDE
+.vs/
+.vscode/
+*.sln
+*.VC.db
+*.opendb
+
+# Unreal Engine Temporary & Generated Folders
+**/DerivedDataCache/
+**/Intermediate/
+**/Saved/
+**/Binaries/
+**/Build/
+
+# Python & Backup Files
+**/__pycache__/
+*.pyc
+*.bak

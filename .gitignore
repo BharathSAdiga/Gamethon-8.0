@@ -1,0 +1,21 @@
+﻿# Unreal Engine Installation Folder (60GB Engine)
+/UE_5.6/
+/UE_*/
+
+# Unreal Project Cache & Build Directories
+**/Intermediate/
+**/DerivedDataCache/
+**/Saved/
+**/Binaries/
+**/Build/
+
+# Visual Studio & IDE Files
+**/.vs/
+**/.idea/
+**/*.sln
+**/*.vcxproj*
+**/.vscode/
+
+# System / Temporary
+Thumbs.db
+.DS_Store
