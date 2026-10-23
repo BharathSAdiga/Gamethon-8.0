@@ -1,4 +1,4 @@
-﻿# 👥 TEAM GUIDE — Gamethon 8.0
+# 👥 TEAM GUIDE — Gamethon 8.0
 
 A quick reference for every team member. Read this before adding anything to the repo.
 
@@ -25,12 +25,15 @@ A quick reference for every team member. Read this before adding anything to the
 | UI widget | `UE Projects/Lastsecond/Content/UI/` |
 | Game level / map | `UE Projects/Lastsecond/Content/Maps/Levels/` |
 
-### If you have raw concept art or reference images
+### If you have raw assets, concept art, or reference images
 | What | Where |
 |---|---|
+| Asset images / sprites / decals | `Assets/Images/` |
+| Game assets / props / prefabs | `Assets/Game_Assets/` |
 | Concept art | `Assets/Concepts/` |
 | Reference images | `Assets/Reference/` |
 | Background images (raw) | `Assets/Backgrounds/` |
+
 
 ---
 
