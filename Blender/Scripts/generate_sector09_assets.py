@@ -232,6 +232,83 @@ def join_objects_to_single_mesh(root_empty, final_name):
     return final_mesh
 
 
+def create_individual_asset_material(raw_name):
+    mat_name = f"M_Asset_{raw_name}"
+    mat = bpy.data.materials.get(mat_name)
+    if mat:
+        return mat
+    mat = bpy.data.materials.new(name=mat_name)
+    mat.use_nodes = True
+    nodes = mat.node_tree.nodes
+    links = mat.node_tree.links
+    nodes.clear()
+
+    out = nodes.new('ShaderNodeOutputMaterial')
+    out.location = (400, 0)
+    bsdf = nodes.new('ShaderNodeBsdfPrincipled')
+    bsdf.location = (0, 0)
+    links.new(bsdf.outputs['BSDF'], out.inputs['Surface'])
+
+    safe_set_bsdf(bsdf, 'Base Color', (0.1, 0.12, 0.15, 1.0))
+    safe_set_bsdf(bsdf, 'Metallic', 0.8)
+    safe_set_bsdf(bsdf, 'Roughness', 0.45)
+
+    tex_dir = os.path.join(REPO_ROOT, "Assets", "Textures", "Individual")
+    bc_path = os.path.join(tex_dir, f"T_{raw_name}_BaseColor.png")
+    if os.path.exists(bc_path):
+        img_bc = bpy.data.images.load(bc_path)
+        node_bc = nodes.new('ShaderNodeTexImage')
+        node_bc.location = (-400, 200)
+        node_bc.image = img_bc
+        links.new(node_bc.outputs['Color'], bsdf.inputs['Base Color'])
+
+    n_path = os.path.join(tex_dir, f"T_{raw_name}_Normal.png")
+    if os.path.exists(n_path):
+        img_n = bpy.data.images.load(n_path)
+        img_n.colorspace_settings.name = 'Non-Color'
+        node_n = nodes.new('ShaderNodeTexImage')
+        node_n.location = (-600, -200)
+        node_n.image = img_n
+        node_norm = nodes.new('ShaderNodeNormalMap')
+        node_norm.location = (-200, -200)
+        node_norm.inputs['Strength'].default_value = 1.0
+        links.new(node_n.outputs['Color'], node_norm.inputs['Color'])
+        links.new(node_norm.outputs['Normal'], bsdf.inputs['Normal'])
+
+    r_path = os.path.join(tex_dir, f"T_{raw_name}_Roughness.png")
+    if os.path.exists(r_path):
+        img_r = bpy.data.images.load(r_path)
+        img_r.colorspace_settings.name = 'Non-Color'
+        node_r = nodes.new('ShaderNodeTexImage')
+        node_r.location = (-400, -50)
+        node_r.image = img_r
+        links.new(node_r.outputs['Color'], bsdf.inputs['Roughness'])
+
+    m_path = os.path.join(tex_dir, f"T_{raw_name}_Metallic.png")
+    if os.path.exists(m_path):
+        img_m = bpy.data.images.load(m_path)
+        img_m.colorspace_settings.name = 'Non-Color'
+        node_m = nodes.new('ShaderNodeTexImage')
+        node_m.location = (-400, -350)
+        node_m.image = img_m
+        links.new(node_m.outputs['Color'], bsdf.inputs['Metallic'])
+
+    e_path = os.path.join(tex_dir, f"T_{raw_name}_Emissive.png")
+    if os.path.exists(e_path):
+        img_e = bpy.data.images.load(e_path)
+        node_e = nodes.new('ShaderNodeTexImage')
+        node_e.location = (-400, -500)
+        node_e.image = img_e
+        if 'Emission Color' in bsdf.inputs:
+            links.new(node_e.outputs['Color'], bsdf.inputs['Emission Color'])
+            if 'Emission Strength' in bsdf.inputs:
+                bsdf.inputs['Emission Strength'].default_value = 4.0
+        elif 'Emission' in bsdf.inputs:
+            links.new(node_e.outputs['Color'], bsdf.inputs['Emission'])
+
+    return mat
+
+
 def export_fbx(mesh_obj, export_paths):
     bpy.ops.object.select_all(action='DESELECT')
     mesh_obj.select_set(True)
@@ -251,8 +328,8 @@ def export_fbx(mesh_obj, export_paths):
             mesh_smooth_type='FACE',
             use_mesh_modifiers=True,
             add_leaf_bones=False,
-            path_mode='COPY',
-            embed_textures=True
+            path_mode='AUTO',
+            embed_textures=False
         )
     print(f"  -> Exported: {mesh_obj.name}.fbx")
 
@@ -1045,12 +1122,75 @@ ASSET_REGISTRY = [
 ]
 
 # ---------------------------------------------------------------------------
+# MESH CATEGORY MAPPING FOR UNREAL ENGINE & ASSETS STRUCTURE
+# ---------------------------------------------------------------------------
+
+MESH_MAPPING = {
+    "SM_01_Wall_Panel_A.fbx": ("Architecture", "SM_WallPanel_A.fbx"),
+    "SM_01_Wall_Panel_B_Pipes.fbx": ("Architecture", "SM_WallPanel_B_Pipes.fbx"),
+    "SM_01_Wall_Panel_C_Vent.fbx": ("Architecture", "SM_WallPanel_C_Vent.fbx"),
+    "SM_01_Corner_Wall.fbx": ("Architecture", "SM_Corner_Wall.fbx"),
+    "SM_01_Window_Panel.fbx": ("Architecture", "SM_Window_Panel.fbx"),
+    "SM_03_Horizontal_Beam.fbx": ("Architecture", "SM_Support_Beam.fbx"),
+    "SM_03_Large_Vertical_Panel.fbx": ("Architecture", "SM_Lift_Shaft_Wall.fbx"),
+    "SM_02_Floor_Tile_A.fbx": ("Floors", "SM_FloorTile_A.fbx"),
+    "SM_02_Floor_Tile_B_Grate.fbx": ("Floors", "SM_FloorTile_B_Grate.fbx"),
+    "SM_02_Floor_Tile_C.fbx": ("Floors", "SM_FloorTile_C.fbx"),
+    "SM_02_Floor_Tile_D_Corner.fbx": ("Floors", "SM_FloorTile_D_Corner.fbx"),
+    "SM_02_Floor_Tile_E_Ramp.fbx": ("Floors", "SM_Floor_Ramp.fbx"),
+    "SM_02_Platform_Module.fbx": ("Floors", "SM_Platform_Module.fbx"),
+    "SM_02_Stair_Module.fbx": ("Floors", "SM_Stair_Module.fbx"),
+    "SM_01_Industrial_Door.fbx": ("Doors", "SM_Industrial_Door.fbx"),
+    "SM_01_Door_Frame.fbx": ("Doors", "SM_Door_Frame.fbx"),
+    "SM_01_Large_Gate.fbx": ("Doors", "SM_Large_Gate.fbx"),
+    "SM_03_Cable_Tray.fbx": ("Industrial", "SM_Cable_Tray.fbx"),
+    "SM_05_Electrical_Box.fbx": ("Industrial", "SM_Electrical_Box.fbx"),
+    "SM_05_Access_Panel.fbx": ("Industrial", "SM_Access_Panel.fbx"),
+    "SM_06_Duct_Cover.fbx": ("Industrial", "SM_Duct_Cover.fbx"),
+    "SM_03_Pipe_Straight.fbx": ("Pipes", "SM_Pipe_Straight.fbx"),
+    "SM_03_Pipe_Elbow.fbx": ("Pipes", "SM_Pipe_Elbow.fbx"),
+    "SM_03_Pipe_Junction_T.fbx": ("Pipes", "SM_Pipe_Junction_T.fbx"),
+    "SM_03_Pipe_Set_Wall.fbx": ("Pipes", "SM_Pipe_Set_Wall.fbx"),
+    "SM_02_Railing_Straight.fbx": ("Railings", "SM_Railing_Straight.fbx"),
+    "SM_02_Railing_Corner.fbx": ("Railings", "SM_Railing_Corner.fbx"),
+    "SM_05_AC_Unit_Generator.fbx": ("Machinery", "SM_AC_Unit.fbx"),
+    "SM_05_Vent_Unit.fbx": ("Machinery", "SM_Vent_Unit.fbx"),
+    "SM_03_Lift_Platform.fbx": ("Machinery", "SM_LiftPlatform.fbx"),
+    "SM_03_Elevator_Shaft_Module.fbx": ("Machinery", "SM_Elevator_Shaft_Module.fbx"),
+    "SM_04_Crate_Small.fbx": ("Props", "SM_Crate_Small.fbx"),
+    "SM_04_Crate_Medium.fbx": ("Props", "SM_Crate_Medium.fbx"),
+    "SM_04_Crate_Large.fbx": ("Props", "SM_Crate_Large.fbx"),
+    "SM_04_Stacked_Crates.fbx": ("Props", "SM_Stacked_Crates.fbx"),
+    "SM_04_Barrel.fbx": ("Props", "SM_Barrel.fbx"),
+    "SM_04_Barrier_Low.fbx": ("Props", "SM_Barrier_Low.fbx"),
+    "SM_04_Barrier_Tall.fbx": ("Props", "SM_Barrier_Tall.fbx"),
+    "SM_04_Construction_Barrier.fbx": ("Props", "SM_Construction_Barrier.fbx"),
+    "SM_04_Pallet.fbx": ("Props", "SM_Pallet.fbx"),
+    "SM_06_Trash_Bin_A.fbx": ("Props", "SM_Trash_Bin_A.fbx"),
+    "SM_06_Trash_Bin_B.fbx": ("Props", "SM_Trash_Bin_B.fbx"),
+    "SM_06_Computer_Desk.fbx": ("Props", "SM_Computer_Desk.fbx"),
+    "SM_06_Chair.fbx": ("Props", "SM_Chair.fbx"),
+    "SM_05_Security_Camera.fbx": ("SciFi", "SM_SurveillanceCamera.fbx"),
+    "SM_05_Server_Rack.fbx": ("SciFi", "SM_Server_Rack.fbx"),
+    "SM_05_Control_Terminal.fbx": ("SciFi", "SM_ControlTerminal.fbx"),
+    "SM_05_Info_Terminal_Glitch.fbx": ("SciFi", "SM_Info_Terminal_Glitch.fbx"),
+    "SM_06_Monitor_Screen.fbx": ("SciFi", "SM_Monitor_Screen.fbx"),
+    "SM_05_Hanging_Light.fbx": ("SciFi", "SM_Hanging_Light.fbx"),
+    "SM_06_Ceiling_Light.fbx": ("SciFi", "SM_Ceiling_Light.fbx"),
+    "SM_06_Wall_Light_Warm.fbx": ("SciFi", "SM_Wall_Light_Warm.fbx"),
+    "SM_06_Neon_Light_Cyan.fbx": ("SciFi", "SM_Neon_Light_Cyan.fbx"),
+    "SM_06_Neon_Light_Purple.fbx": ("SciFi", "SM_Neon_Light_Purple.fbx"),
+    "SM_06_Emergency_Light_Red.fbx": ("SciFi", "SM_Emergency_Light_Red.fbx"),
+    "SM_06_Street_Light_Indoor.fbx": ("SciFi", "SM_Street_Light_Indoor.fbx")
+}
+
+# ---------------------------------------------------------------------------
 # MAIN PIPELINE EXECUTION
 # ---------------------------------------------------------------------------
 
 def main():
     print("=" * 70)
-    print("  SECTOR 09 — LEVEL 1 MODULAR ASSET KIT GENERATOR")
+    print("  SECTOR 09 — LEVEL 1 MODULAR ASSET KIT GENERATOR (EXACT TEXTURES)")
     print(f"  Target Asset Count: {len(ASSET_REGISTRY)}")
     print("=" * 70)
 
@@ -1080,20 +1220,35 @@ def main():
         mesh.name = clean_name
         generated_meshes.append(mesh)
 
-        # Export individual FBX to both Blender/FBX and Assets/Level_1
+        # Assign exact individual PBR material as primary body/panel material
+        indiv_mat = create_individual_asset_material(raw_name)
+        if indiv_mat:
+            if len(mesh.data.materials) == 0:
+                mesh.data.materials.append(indiv_mat)
+            else:
+                mesh.data.materials[0] = indiv_mat
+
+        # Export individual FBX to Blender/FBX and Assets/Level_1
         fbx_name = f"{clean_name}.fbx"
         export_paths = [
             os.path.join(FBX_OUTPUT_DIR, fbx_name),
             os.path.join(LEVEL1_OUTPUT_DIR, fbx_name)
         ]
+
+        if fbx_name in MESH_MAPPING:
+            cat, target_name = MESH_MAPPING[fbx_name]
+            export_paths.append(os.path.join(REPO_ROOT, "Assets", "Meshes", cat, target_name))
+            export_paths.append(os.path.join(REPO_ROOT, "UE Projects", "MyProject", "Content", "Assets", "Meshes", cat, target_name))
+
         export_fbx(mesh, export_paths)
 
     # Save Master Blender Showcase
     bpy.ops.wm.save_as_mainfile(filepath=BLEND_OUTPUT_PATH)
     print(f"\n[SUCCESS] Master showcase scene saved: {BLEND_OUTPUT_PATH}")
-    print(f"[SUCCESS] Exported {len(generated_meshes)} FBX assets to:\n  - {FBX_OUTPUT_DIR}\n  - {LEVEL1_OUTPUT_DIR}")
+    print(f"[SUCCESS] Exported {len(generated_meshes)} FBX assets with exact PBR textures.")
     print("=" * 70)
 
 
 if __name__ == "__main__":
     main()
+
