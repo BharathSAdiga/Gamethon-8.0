@@ -1,0 +1,71 @@
+﻿# ============================================================
+#  Gamethon 8.0 — Git LFS Tracking Rules
+#  All large binary files are tracked via Git LFS
+# ============================================================
+
+# ─── 3D SOURCE FILES ────────────────────────────────────────
+*.blend         filter=lfs diff=lfs merge=lfs -text
+*.blend1        filter=lfs diff=lfs merge=lfs -text
+*.fbx           filter=lfs diff=lfs merge=lfs -text
+*.obj           filter=lfs diff=lfs merge=lfs -text
+*.abc           filter=lfs diff=lfs merge=lfs -text
+*.glb           filter=lfs diff=lfs merge=lfs -text
+*.gltf          filter=lfs diff=lfs merge=lfs -text
+*.dae           filter=lfs diff=lfs merge=lfs -text
+*.3ds           filter=lfs diff=lfs merge=lfs -text
+*.ma            filter=lfs diff=lfs merge=lfs -text
+*.mb            filter=lfs diff=lfs merge=lfs -text
+
+# ─── TEXTURES & IMAGES ──────────────────────────────────────
+*.png           filter=lfs diff=lfs merge=lfs -text
+*.jpg           filter=lfs diff=lfs merge=lfs -text
+*.jpeg          filter=lfs diff=lfs merge=lfs -text
+*.tga           filter=lfs diff=lfs merge=lfs -text
+*.psd           filter=lfs diff=lfs merge=lfs -text
+*.exr           filter=lfs diff=lfs merge=lfs -text
+*.hdr           filter=lfs diff=lfs merge=lfs -text
+*.bmp           filter=lfs diff=lfs merge=lfs -text
+*.tiff          filter=lfs diff=lfs merge=lfs -text
+*.dds           filter=lfs diff=lfs merge=lfs -text
+
+# ─── AUDIO ──────────────────────────────────────────────────
+*.wav           filter=lfs diff=lfs merge=lfs -text
+*.mp3           filter=lfs diff=lfs merge=lfs -text
+*.ogg           filter=lfs diff=lfs merge=lfs -text
+*.flac          filter=lfs diff=lfs merge=lfs -text
+*.aif           filter=lfs diff=lfs merge=lfs -text
+*.aiff          filter=lfs diff=lfs merge=lfs -text
+
+# ─── VIDEO ──────────────────────────────────────────────────
+*.mp4           filter=lfs diff=lfs merge=lfs -text
+*.mov           filter=lfs diff=lfs merge=lfs -text
+*.avi           filter=lfs diff=lfs merge=lfs -text
+*.mkv           filter=lfs diff=lfs merge=lfs -text
+
+# ─── UNREAL ENGINE BINARY ASSETS ────────────────────────────
+*.uasset        filter=lfs diff=lfs merge=lfs -text
+*.umap          filter=lfs diff=lfs merge=lfs -text
+*.ubulk         filter=lfs diff=lfs merge=lfs -text
+*.uexp          filter=lfs diff=lfs merge=lfs -text
+*.uplugin       filter=lfs diff=lfs merge=lfs -text
+
+# ─── PACKAGED/COMPILED ──────────────────────────────────────
+*.pak           filter=lfs diff=lfs merge=lfs -text
+*.ucas          filter=lfs diff=lfs merge=lfs -text
+*.utoc          filter=lfs diff=lfs merge=lfs -text
+*.dll           filter=lfs diff=lfs merge=lfs -text
+*.so            filter=lfs diff=lfs merge=lfs -text
+*.exe           filter=lfs diff=lfs merge=lfs -text
+
+# ─── TEXT / CODE FILES (NOT LFS — diff normally) ────────────
+*.py            text eol=lf
+*.cpp           text eol=lf
+*.h             text eol=lf
+*.cs            text eol=lf
+*.ini           text eol=lf
+*.cfg           text eol=lf
+*.json          text eol=lf
+*.md            text eol=lf
+*.txt           text eol=lf
+*.gitignore     text eol=lf
+*.gitattributes text eol=lf
