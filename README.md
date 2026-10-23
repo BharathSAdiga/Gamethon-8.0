@@ -1,4 +1,4 @@
-﻿# 🎮 Gamethon 8.0 — Cyberpunk Game
+# 🎮 Gamethon 8.0 — Cyberpunk Game
 
 > A cyberpunk-themed Unreal Engine 5 game developed for Gamethon 8.0.
 
@@ -10,32 +10,21 @@
 unreal engine/
 │
 ├── UE Projects/
-│   └── Lastsecond/              ← Main UE5 Project
+│   └── MyProject/               ← Main UE5 Project
 │       └── Content/
-│           ├── Blueprints/      ← All Blueprint classes
-│           ├── Characters/      ← Character meshes, rigs, anims, materials
-│           ├── Environments/    ← Level environment assets
-│           ├── StaticMeshes/    ← Architecture, props, vehicles
-│           ├── Cyberpunk_Structures/ ← Cyberpunk-specific structures
-│           ├── Materials/       ← Master materials, instances, functions
-│           ├── Textures/        ← All textures by category
-│           ├── VFX/             ← Niagara particles and VFX materials
-│           ├── Audio/           ← Music, SFX, dialogue, ambience
-│           ├── Animations/      ← Anim blueprints, montages, blendspaces
-│           ├── UI/              ← HUD, menus, widgets, icons
-│           ├── Maps/            ← Levels and streaming maps
-│           ├── Data/            ← DataTables, DataAssets, Curves, Enums
-│           ├── Cinematics/      ← Sequences and cutscenes
-│           ├── Physics/         ← Physics materials and surfaces
-│           ├── AI/              ← Behavior trees, blackboards, EQS
-│           ├── SourceAssets/    ← Raw FBX and source files for import
-│           └── ThirdParty/      ← Marketplace and plugin assets
+│           ├── Characters/      ← Character meshes, rigs, anims
+│           ├── Input/           ← Enhanced input actions and contexts
+│           ├── LevelPrototyping/← Prototyping meshes and materials
+│           ├── ThirdPerson/     ← Third-person game mode and blueprints
+│           └── Variant_Platforming/ ← Platforming character and mechanics
 │
 ├── Assets/                      ← Raw / source art assets
+│   ├── Images/                  ← 2D images, sprites, SECTOR09 level assets
+│   ├── Game_Assets/             ← Prefabs, props, and asset packs
 │   ├── Backgrounds/             ← 2D background images (City, Railway, etc.)
 │   ├── Concepts/                ← Concept art (Characters, Environments, UI)
 │   ├── Reference/               ← Art and technical references
-│   └── Exports/                 ← Final FBX/OBJ/Texture exports
+│   └── Exports/                 ← Final exports
 │
 ├── Blender/                     ← Blender source files
 │   ├── Characters/
@@ -87,9 +76,10 @@ unreal engine/
 
 ## 🚀 Quick Start
 
-1. Open UE Projects/Lastsecond/Lastsecond.uproject in Unreal Engine 5
-2. Import FBX structures from Content/SourceAssets/FBX/Structures/ into Cyberpunk_Structures/Meshes/
-3. Background images are pre-sorted under Environments/(City|Railway|Indoor|Outdoor)/Backgrounds/
+1. Open `UE Projects/MyProject/MyProject.uproject` in Unreal Engine 5
+2. All 3D FBX files are in `Blender/FBX/`
+3. 2D Level 1 Assets are in `Assets/Images/SECTOR09_Level1_Assets/`
+4. Background art is organized under `Assets/Backgrounds/`
 
 ---
 

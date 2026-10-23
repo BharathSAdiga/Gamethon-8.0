@@ -13,17 +13,17 @@ A quick reference for every team member. Read this before adding anything to the
 | Exported `.fbx` | `Blender/FBX/` |
 | Python script | `Blender/Scripts/` |
 
-### If you work in Unreal Engine (UE5 project is `UE Projects/Lastsecond/`)
+### If you work in Unreal Engine (UE5 project is `UE Projects/MyProject/`)
 | What you made | Where to save it |
 |---|---|
-| Background / environment image | `UE Projects/Lastsecond/Content/Environments/City/` or `Railway/` or `Indoor/` or `Outdoor/` |
-| Character mesh, rig, animation | `UE Projects/Lastsecond/Content/Characters/Player/` or `NPCs/` |
-| Blueprint | `UE Projects/Lastsecond/Content/Blueprints/` |
-| Material / texture | `UE Projects/Lastsecond/Content/Materials/` or `Textures/` |
-| VFX (Niagara) | `UE Projects/Lastsecond/Content/VFX/Niagara/` |
-| Sound / music | `UE Projects/Lastsecond/Content/Audio/` |
-| UI widget | `UE Projects/Lastsecond/Content/UI/` |
-| Game level / map | `UE Projects/Lastsecond/Content/Maps/Levels/` |
+| Background / environment image | `UE Projects/MyProject/Content/Environments/City/` or `Railway/` or `Indoor/` or `Outdoor/` |
+| Character mesh, rig, animation | `UE Projects/MyProject/Content/Characters/Player/` or `NPCs/` |
+| Blueprint | `UE Projects/MyProject/Content/Blueprints/` |
+| Material / texture | `UE Projects/MyProject/Content/Materials/` or `Textures/` |
+| VFX (Niagara) | `UE Projects/MyProject/Content/VFX/Niagara/` |
+| Sound / music | `UE Projects/MyProject/Content/Audio/` |
+| UI widget | `UE Projects/MyProject/Content/UI/` |
+| Game level / map | `UE Projects/MyProject/Content/Maps/Levels/` |
 
 ### If you have raw assets, concept art, or reference images
 | What | Where |
@@ -92,7 +92,7 @@ fix: fix material on telecom tower
 
 1. **Always `git pull` before you start working** — avoid conflicts
 2. **Never commit to `main` directly during crunch** — tell the team before pushing
-3. **Never put files in `UE Projects/MyProject/` or `MyProject2/`** — those are old templates, ignored
+3. **All Unreal Engine work goes into `UE Projects/MyProject/`** — keep Content/ clean and structured
 4. **Large files (FBX, PNG, blend) are handled by Git LFS automatically** — just `git add` normally
 5. **Don't commit the `Saved/`, `Intermediate/`, or `DerivedDataCache/` folders** — already in gitignore
 
@@ -102,7 +102,7 @@ fix: fix material on telecom tower
 
 | Repo | https://github.com/BharathSAdiga/Gamethon-8.0 |
 |---|---|
-| Main UE Project | `UE Projects/Lastsecond/` |
+| Main UE Project | `UE Projects/MyProject/` |
 | Blender files | `Blender/` |
 | Background art | `Assets/Backgrounds/` |
 | Team guide | This file (`TEAM_GUIDE.md`) |

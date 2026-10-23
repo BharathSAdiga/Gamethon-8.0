@@ -1,4 +1,4 @@
-﻿# ============================================================
+# ============================================================
 #  Gamethon 8.0 — .gitignore
 # ============================================================
 
@@ -6,9 +6,11 @@
 /UE_5.6/
 /UE_*/
 
-# Template projects - not our game
-UE Projects/MyProject/
+# Deleted / old template projects - not used
 UE Projects/MyProject2/
+UE Projects/Lastsecond/
+UE Projects/Cyberpunk game/
+
 
 # UE Build & Cache
 **/Intermediate/
