@@ -15,11 +15,12 @@ from mathutils import Vector, Euler
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 BLEND_OUTPUT_PATH = os.path.join(REPO_ROOT, "Blender", "Blend", "Sector09_Level1_Kit.blend")
 FBX_OUTPUT_DIR = os.path.join(REPO_ROOT, "Blender", "FBX", "Sector09")
-UE_CONTENT_DIR = os.path.join(REPO_ROOT, "UE Projects", "MyProject", "Content", "Sector09")
+LEVEL1_OUTPUT_DIR = os.path.join(REPO_ROOT, "Assets", "Level_1")
 
 os.makedirs(os.path.dirname(BLEND_OUTPUT_PATH), exist_ok=True)
 os.makedirs(FBX_OUTPUT_DIR, exist_ok=True)
-os.makedirs(UE_CONTENT_DIR, exist_ok=True)
+os.makedirs(LEVEL1_OUTPUT_DIR, exist_ok=True)
+
 
 # ---------------------------------------------------------------------------
 # Shader & Material System
@@ -34,7 +35,7 @@ def safe_set_bsdf(bsdf, socket_name, value):
         bsdf.inputs['Emission Color'].default_value = value
 
 
-def create_pbr_material(name, base_color, metallic=0.0, roughness=0.5, emission_color=None, emission_strength=0.0):
+def create_pbr_material(name, base_color, metallic=0.0, roughness=0.5, emission_color=None, emission_strength=0.0, tex_prefix=None):
     mat = bpy.data.materials.get(name)
     if mat:
         return mat
@@ -61,31 +62,84 @@ def create_pbr_material(name, base_color, metallic=0.0, roughness=0.5, emission_
         if 'Emission Strength' in bsdf.inputs:
             bsdf.inputs['Emission Strength'].default_value = emission_strength
 
+    if tex_prefix:
+        tex_dir = os.path.join(REPO_ROOT, "Assets", "Level_1", "Textures")
+        bc_path = os.path.join(tex_dir, f"{tex_prefix}_BaseColor.png")
+        if os.path.exists(bc_path):
+            img_bc = bpy.data.images.load(bc_path)
+            node_bc = nodes.new('ShaderNodeTexImage')
+            node_bc.location = (-400, 200)
+            node_bc.image = img_bc
+            links.new(node_bc.outputs['Color'], bsdf.inputs['Base Color'])
+
+        n_path = os.path.join(tex_dir, f"{tex_prefix}_Normal.png")
+        if os.path.exists(n_path):
+            img_n = bpy.data.images.load(n_path)
+            img_n.colorspace_settings.name = 'Non-Color'
+            node_n = nodes.new('ShaderNodeTexImage')
+            node_n.location = (-600, -200)
+            node_n.image = img_n
+            node_norm = nodes.new('ShaderNodeNormalMap')
+            node_norm.location = (-200, -200)
+            node_norm.inputs['Strength'].default_value = 1.0
+            links.new(node_n.outputs['Color'], node_norm.inputs['Color'])
+            links.new(node_norm.outputs['Normal'], bsdf.inputs['Normal'])
+
+        r_path = os.path.join(tex_dir, f"{tex_prefix}_Roughness.png")
+        if os.path.exists(r_path):
+            img_r = bpy.data.images.load(r_path)
+            img_r.colorspace_settings.name = 'Non-Color'
+            node_r = nodes.new('ShaderNodeTexImage')
+            node_r.location = (-400, -50)
+            node_r.image = img_r
+            links.new(node_r.outputs['Color'], bsdf.inputs['Roughness'])
+
+        m_path = os.path.join(tex_dir, f"{tex_prefix}_Metallic.png")
+        if os.path.exists(m_path):
+            img_m = bpy.data.images.load(m_path)
+            img_m.colorspace_settings.name = 'Non-Color'
+            node_m = nodes.new('ShaderNodeTexImage')
+            node_m.location = (-400, -350)
+            node_m.image = img_m
+            links.new(node_m.outputs['Color'], bsdf.inputs['Metallic'])
+
+        e_path = os.path.join(tex_dir, f"{tex_prefix}_Emissive.png")
+        if os.path.exists(e_path) and emission_color:
+            img_e = bpy.data.images.load(e_path)
+            node_e = nodes.new('ShaderNodeTexImage')
+            node_e.location = (-400, -500)
+            node_e.image = img_e
+            if 'Emission Color' in bsdf.inputs:
+                links.new(node_e.outputs['Color'], bsdf.inputs['Emission Color'])
+            elif 'Emission' in bsdf.inputs:
+                links.new(node_e.outputs['Color'], bsdf.inputs['Emission'])
+
     return mat
 
 
 def get_material_library():
     return {
-        'metal_dark': create_pbr_material('M_Cyberpunk_Metal_Dark', (0.04, 0.04, 0.05, 1.0), metallic=0.9, roughness=0.4),
-        'metal_panel': create_pbr_material('M_Cyberpunk_Metal_Panel', (0.09, 0.12, 0.16, 1.0), metallic=0.75, roughness=0.35),
-        'metal_bright': create_pbr_material('M_Cyberpunk_Metal_Bright', (0.35, 0.38, 0.42, 1.0), metallic=0.95, roughness=0.25),
-        'metal_rust': create_pbr_material('M_Cyberpunk_Metal_Rust', (0.18, 0.08, 0.05, 1.0), metallic=0.4, roughness=0.85),
-        'concrete': create_pbr_material('M_Cyberpunk_Concrete', (0.15, 0.16, 0.17, 1.0), metallic=0.05, roughness=0.9),
-        'hazard_yellow': create_pbr_material('M_Cyberpunk_Hazard_Yellow', (0.95, 0.72, 0.05, 1.0), metallic=0.1, roughness=0.45),
-        'hazard_black': create_pbr_material('M_Cyberpunk_Hazard_Black', (0.02, 0.02, 0.02, 1.0), metallic=0.2, roughness=0.55),
-        'rubber': create_pbr_material('M_Cyberpunk_Rubber', (0.03, 0.03, 0.03, 1.0), metallic=0.0, roughness=0.8),
+        'metal_dark': create_pbr_material('M_Cyberpunk_Metal_Dark', (0.04, 0.04, 0.05, 1.0), metallic=0.9, roughness=0.4, tex_prefix='T_Cyberpunk_Wall_Panel'),
+        'metal_panel': create_pbr_material('M_Cyberpunk_Metal_Panel', (0.09, 0.12, 0.16, 1.0), metallic=0.75, roughness=0.35, tex_prefix='T_Cyberpunk_Wall_Panel'),
+        'metal_bright': create_pbr_material('M_Cyberpunk_Metal_Bright', (0.35, 0.38, 0.42, 1.0), metallic=0.95, roughness=0.25, tex_prefix='T_Cyberpunk_Pipes_Conduit'),
+        'metal_rust': create_pbr_material('M_Cyberpunk_Metal_Rust', (0.18, 0.08, 0.05, 1.0), metallic=0.4, roughness=0.85, tex_prefix='T_Cyberpunk_Pipes_Conduit'),
+        'concrete': create_pbr_material('M_Cyberpunk_Concrete', (0.15, 0.16, 0.17, 1.0), metallic=0.05, roughness=0.9, tex_prefix='T_Cyberpunk_Floor_Grate'),
+        'hazard_yellow': create_pbr_material('M_Cyberpunk_Hazard_Yellow', (0.95, 0.72, 0.05, 1.0), metallic=0.1, roughness=0.45, tex_prefix='T_Cyberpunk_Wall_Panel'),
+        'hazard_black': create_pbr_material('M_Cyberpunk_Hazard_Black', (0.02, 0.02, 0.02, 1.0), metallic=0.2, roughness=0.55, tex_prefix='T_Cyberpunk_Wall_Panel'),
+        'rubber': create_pbr_material('M_Cyberpunk_Rubber', (0.03, 0.03, 0.03, 1.0), metallic=0.0, roughness=0.8, tex_prefix='T_Cyberpunk_Pipes_Conduit'),
         'neon_cyan': create_pbr_material('M_Cyberpunk_Neon_Cyan', (0.0, 0.9, 1.0, 1.0), metallic=0.0, roughness=0.1,
-                                         emission_color=(0.0, 0.9, 1.0, 1.0), emission_strength=12.0),
+                                         emission_color=(0.0, 0.9, 1.0, 1.0), emission_strength=12.0, tex_prefix='T_Cyberpunk_Neon_Lights'),
         'neon_purple': create_pbr_material('M_Cyberpunk_Neon_Purple', (0.85, 0.05, 0.95, 1.0), metallic=0.0, roughness=0.1,
-                                           emission_color=(0.85, 0.05, 0.95, 1.0), emission_strength=12.0),
+                                           emission_color=(0.85, 0.05, 0.95, 1.0), emission_strength=12.0, tex_prefix='T_Cyberpunk_Neon_Lights'),
         'neon_red': create_pbr_material('M_Cyberpunk_Neon_Red', (1.0, 0.03, 0.03, 1.0), metallic=0.0, roughness=0.1,
-                                        emission_color=(1.0, 0.03, 0.03, 1.0), emission_strength=15.0),
+                                        emission_color=(1.0, 0.03, 0.03, 1.0), emission_strength=15.0, tex_prefix='T_Cyberpunk_Neon_Lights'),
         'neon_amber': create_pbr_material('M_Cyberpunk_Neon_Amber', (1.0, 0.45, 0.02, 1.0), metallic=0.0, roughness=0.2,
-                                          emission_color=(1.0, 0.45, 0.02, 1.0), emission_strength=8.0),
+                                          emission_color=(1.0, 0.45, 0.02, 1.0), emission_strength=8.0, tex_prefix='T_Cyberpunk_Neon_Lights'),
         'screen_glitch': create_pbr_material('M_Cyberpunk_Screen_Glitch', (0.05, 0.85, 0.6, 1.0), metallic=0.1, roughness=0.2,
-                                             emission_color=(0.05, 0.85, 0.6, 1.0), emission_strength=10.0),
-        'glass_tinted': create_pbr_material('M_Cyberpunk_Glass_Tinted', (0.05, 0.1, 0.15, 0.8), metallic=0.2, roughness=0.1)
+                                             emission_color=(0.05, 0.85, 0.6, 1.0), emission_strength=10.0, tex_prefix='T_Cyberpunk_Terminal_Console'),
+        'glass_tinted': create_pbr_material('M_Cyberpunk_Glass_Tinted', (0.05, 0.1, 0.15, 0.8), metallic=0.2, roughness=0.1, tex_prefix='T_Cyberpunk_Terminal_Console')
     }
+
 
 # ---------------------------------------------------------------------------
 # Mesh Helpers
@@ -160,6 +214,15 @@ def join_objects_to_single_mesh(root_empty, final_name):
     final_mesh.name = final_name
     final_mesh.parent = None
 
+    # Generate clean, non-overlapping UV coordinates for 2K PBR textures
+    try:
+        bpy.ops.object.mode_set(mode='EDIT')
+        bpy.ops.mesh.select_all(action='SELECT')
+        bpy.ops.uv.smart_project(angle_limit=math.radians(66.0), island_margin=0.02)
+        bpy.ops.object.mode_set(mode='OBJECT')
+    except Exception as e:
+        print(f"  [UV Warning] {final_name}: {e}")
+
     saved_cursor = bpy.context.scene.cursor.location.copy()
     bpy.context.scene.cursor.location = root_empty.location
     bpy.ops.object.origin_set(type='ORIGIN_CURSOR')
@@ -187,9 +250,12 @@ def export_fbx(mesh_obj, export_paths):
             bake_space_transform=True,
             mesh_smooth_type='FACE',
             use_mesh_modifiers=True,
-            add_leaf_bones=False
+            add_leaf_bones=False,
+            path_mode='COPY',
+            embed_textures=True
         )
     print(f"  -> Exported: {mesh_obj.name}.fbx")
+
 
 # ---------------------------------------------------------------------------
 # ASSET BUILDERS: GROUP 01 — WALLS, DOORS & GATES
@@ -1014,18 +1080,18 @@ def main():
         mesh.name = clean_name
         generated_meshes.append(mesh)
 
-        # Export individual FBX to both Blender/FBX and UE Projects Content
+        # Export individual FBX to both Blender/FBX and Assets/Level_1
         fbx_name = f"{clean_name}.fbx"
         export_paths = [
             os.path.join(FBX_OUTPUT_DIR, fbx_name),
-            os.path.join(UE_CONTENT_DIR, fbx_name)
+            os.path.join(LEVEL1_OUTPUT_DIR, fbx_name)
         ]
         export_fbx(mesh, export_paths)
 
     # Save Master Blender Showcase
     bpy.ops.wm.save_as_mainfile(filepath=BLEND_OUTPUT_PATH)
     print(f"\n[SUCCESS] Master showcase scene saved: {BLEND_OUTPUT_PATH}")
-    print(f"[SUCCESS] Exported {len(generated_meshes)} FBX assets to:\n  - {FBX_OUTPUT_DIR}\n  - {UE_CONTENT_DIR}")
+    print(f"[SUCCESS] Exported {len(generated_meshes)} FBX assets to:\n  - {FBX_OUTPUT_DIR}\n  - {LEVEL1_OUTPUT_DIR}")
     print("=" * 70)
 
 
