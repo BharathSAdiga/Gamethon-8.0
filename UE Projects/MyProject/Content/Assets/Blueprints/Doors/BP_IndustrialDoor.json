@@ -1,0 +1,107 @@
+{
+  "category": "Doors",
+  "name": "BP_IndustrialDoor",
+  "parent_class": "Actor",
+  "implemented_interfaces": [
+    "BPI_Interactable"
+  ],
+  "description": "Modular industrial sliding door actor with smooth vertical travel and status lighting.",
+  "components": [
+    {
+      "name": "DefaultSceneRoot",
+      "type": "USceneComponent",
+      "parent": null
+    },
+    {
+      "name": "DoorFrame",
+      "type": "UStaticMeshComponent",
+      "parent": "DefaultSceneRoot",
+      "mesh": "SM_Door_Frame",
+      "mobility": "Static"
+    },
+    {
+      "name": "DoorPanel",
+      "type": "UStaticMeshComponent",
+      "parent": "DefaultSceneRoot",
+      "mesh": "SM_Industrial_Door",
+      "mobility": "Movable"
+    },
+    {
+      "name": "IndicatorLight",
+      "type": "UPointLightComponent",
+      "parent": "DoorFrame",
+      "color": [
+        255,
+        30,
+        30
+      ],
+      "intensity": 1500.0
+    },
+    {
+      "name": "InteractionBox",
+      "type": "UBoxComponent",
+      "parent": "DefaultSceneRoot",
+      "extent": [
+        120,
+        180,
+        220
+      ],
+      "collision_profile": "Trigger"
+    },
+    {
+      "name": "DoorAudioComp",
+      "type": "UAudioComponent",
+      "parent": "DoorPanel"
+    },
+    {
+      "name": "DoorTimeline",
+      "type": "UTimelineComponent",
+      "parent": null,
+      "length": 1.2,
+      "curve": "EaseInOut"
+    }
+  ],
+  "variables": [
+    {
+      "name": "IsOpen",
+      "type": "bool",
+      "default": false,
+      "replicated": true
+    },
+    {
+      "name": "CanInteract",
+      "type": "bool",
+      "default": true,
+      "replicated": false
+    },
+    {
+      "name": "OpenDuration",
+      "type": "float",
+      "default": 1.2,
+      "editable": true
+    },
+    {
+      "name": "ClosedTransform",
+      "type": "FTransform",
+      "default": "Identity",
+      "editable": false
+    },
+    {
+      "name": "OpenHeightOffset",
+      "type": "float",
+      "default": 240.0,
+      "editable": true
+    },
+    {
+      "name": "AutoCloseDelay",
+      "type": "float",
+      "default": 5.0,
+      "editable": true
+    }
+  ],
+  "events": [
+    "OnInteract(AActor* Caller)",
+    "OnDoorOpened(AActor* DoorRef)",
+    "OnDoorClosed(AActor* DoorRef)"
+  ]
+}

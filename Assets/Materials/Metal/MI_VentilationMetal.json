@@ -1,0 +1,31 @@
+{
+  "path": [
+    "Metal",
+    "MI_VentilationMetal.json"
+  ],
+  "name": "MI_VentilationMetal",
+  "parent": "M_IndustrialMetal_Master",
+  "type": "MaterialInstance",
+  "description": "Zinc-coated galvanized sheet metal for air ducts, ventilation units, and cooling fans.",
+  "parameters": {
+    "scalar": {
+      "MetallicMultiplier": 0.92,
+      "RoughnessMultiplier": 0.45,
+      "NormalStrength": 1.0
+    },
+    "vector": {
+      "BaseColorTint": [
+        0.38,
+        0.42,
+        0.45,
+        1.0
+      ]
+    },
+    "textures": {
+      "BaseColorMap": "/Game/Assets/Textures/BaseColor/T_Cyberpunk_Wall_Panel_BaseColor",
+      "NormalMap": "/Game/Assets/Textures/Normal/T_Cyberpunk_Wall_Panel_Normal",
+      "RoughnessMap": "/Game/Assets/Textures/Roughness/T_Cyberpunk_Wall_Panel_Roughness",
+      "MetallicMap": "/Game/Assets/Textures/Metallic/T_Cyberpunk_Wall_Panel_Metallic"
+    }
+  }
+}

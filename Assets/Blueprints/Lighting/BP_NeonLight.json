@@ -1,0 +1,67 @@
+{
+  "category": "Lighting",
+  "name": "BP_NeonLight",
+  "parent_class": "Actor",
+  "description": "Atmospheric cyberpunk neon bar casting rich colored bounce illumination with dynamic color switching.",
+  "components": [
+    {
+      "name": "DefaultSceneRoot",
+      "type": "USceneComponent",
+      "parent": null
+    },
+    {
+      "name": "NeonStripMesh",
+      "type": "UStaticMeshComponent",
+      "parent": "DefaultSceneRoot",
+      "mesh": "SM_Neon_Light_Cyan",
+      "mobility": "Static"
+    },
+    {
+      "name": "PointLight",
+      "type": "UPointLightComponent",
+      "parent": "NeonStripMesh",
+      "color": [
+        0,
+        230,
+        255
+      ],
+      "intensity": 3500.0,
+      "attenuation": 600.0
+    }
+  ],
+  "variables": [
+    {
+      "name": "NeonColour",
+      "type": "FLinearColor",
+      "default": [
+        0.0,
+        0.9,
+        1.0,
+        1.0
+      ],
+      "editable": true
+    },
+    {
+      "name": "EmissiveIntensity",
+      "type": "float",
+      "default": 15.0,
+      "editable": true
+    },
+    {
+      "name": "LightIntensity",
+      "type": "float",
+      "default": 3500.0,
+      "editable": true
+    },
+    {
+      "name": "IsEnabled",
+      "type": "bool",
+      "default": true,
+      "editable": true
+    }
+  ],
+  "events": [
+    "UserConstructionScript()",
+    "ToggleLight(bool bEnable)"
+  ]
+}

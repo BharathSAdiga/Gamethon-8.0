@@ -1,0 +1,91 @@
+{
+  "category": "Doors",
+  "name": "BP_LockedGate",
+  "parent_class": "Actor",
+  "description": "Massive armored mechanical blast gate sealing Level 1 exit, responsive to BP_ControlTerminal.",
+  "components": [
+    {
+      "name": "DefaultSceneRoot",
+      "type": "USceneComponent",
+      "parent": null
+    },
+    {
+      "name": "GateFrame",
+      "type": "UStaticMeshComponent",
+      "parent": "DefaultSceneRoot",
+      "mesh": "SM_Large_Gate",
+      "mobility": "Static"
+    },
+    {
+      "name": "GatePanelLeft",
+      "type": "UStaticMeshComponent",
+      "parent": "GateFrame",
+      "mobility": "Movable"
+    },
+    {
+      "name": "GatePanelRight",
+      "type": "UStaticMeshComponent",
+      "parent": "GateFrame",
+      "mobility": "Movable"
+    },
+    {
+      "name": "RedWarningLight",
+      "type": "UPointLightComponent",
+      "parent": "GateFrame",
+      "color": [
+        255,
+        20,
+        20
+      ],
+      "intensity": 3500.0
+    },
+    {
+      "name": "AlarmAudioComp",
+      "type": "UAudioComponent",
+      "parent": "GateFrame"
+    },
+    {
+      "name": "GateOpenTimeline",
+      "type": "UTimelineComponent",
+      "parent": null,
+      "length": 3.5,
+      "curve": "MechanicalCubic"
+    }
+  ],
+  "variables": [
+    {
+      "name": "IsLocked",
+      "type": "bool",
+      "default": true,
+      "replicated": true
+    },
+    {
+      "name": "IsOpening",
+      "type": "bool",
+      "default": false,
+      "replicated": true
+    },
+    {
+      "name": "OpenDuration",
+      "type": "float",
+      "default": 3.5,
+      "editable": true
+    },
+    {
+      "name": "GateRetractionDistance",
+      "type": "float",
+      "default": 260.0,
+      "editable": true
+    },
+    {
+      "name": "WarningStrobeRate",
+      "type": "float",
+      "default": 1.5,
+      "editable": true
+    }
+  ],
+  "events": [
+    "UnlockAndOpenGate()",
+    "OnGateFullyOpened()"
+  ]
+}

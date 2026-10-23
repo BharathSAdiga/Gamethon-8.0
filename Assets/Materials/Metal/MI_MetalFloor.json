@@ -1,0 +1,32 @@
+{
+  "path": [
+    "Metal",
+    "MI_MetalFloor.json"
+  ],
+  "name": "MI_MetalFloor",
+  "parent": "M_IndustrialMetal_Master",
+  "type": "MaterialInstance",
+  "description": "Diamond tread and ribbed industrial metal plates with reflective highlights and scuff marks.",
+  "parameters": {
+    "scalar": {
+      "MetallicMultiplier": 0.95,
+      "RoughnessMultiplier": 0.85,
+      "NormalStrength": 1.3,
+      "UVTile": 1.0
+    },
+    "vector": {
+      "BaseColorTint": [
+        0.18,
+        0.2,
+        0.24,
+        1.0
+      ]
+    },
+    "textures": {
+      "BaseColorMap": "/Game/Assets/Textures/BaseColor/T_Cyberpunk_Floor_Grate_BaseColor",
+      "NormalMap": "/Game/Assets/Textures/Normal/T_Cyberpunk_Floor_Grate_Normal",
+      "RoughnessMap": "/Game/Assets/Textures/Roughness/T_Cyberpunk_Floor_Grate_Roughness",
+      "MetallicMap": "/Game/Assets/Textures/Metallic/T_Cyberpunk_Floor_Grate_Metallic"
+    }
+  }
+}

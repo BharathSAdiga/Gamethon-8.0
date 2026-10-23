@@ -1,0 +1,28 @@
+{
+  "path": [
+    "SpecialEffects",
+    "MI_IndustrialPaint.json"
+  ],
+  "name": "MI_IndustrialPaint",
+  "parent": "M_IndustrialMetal_Master",
+  "type": "MaterialInstance",
+  "description": "Hazard yellow / caution striped coating applied to floor edges, lift thresholds, and barricades.",
+  "parameters": {
+    "scalar": {
+      "MetallicMultiplier": 0.15,
+      "RoughnessMultiplier": 0.65,
+      "NormalStrength": 1.1
+    },
+    "vector": {
+      "BaseColorTint": [
+        0.95,
+        0.75,
+        0.05,
+        1.0
+      ]
+    },
+    "textures": {
+      "BaseColorMap": "/Game/Assets/Textures/Decals/T_Decal_Hazard_Stripe_BaseColor"
+    }
+  }
+}

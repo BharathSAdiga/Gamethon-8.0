@@ -1,0 +1,74 @@
+{
+  "category": "Interactive",
+  "name": "BP_InteractablePanel",
+  "parent_class": "Actor",
+  "implemented_interfaces": [
+    "BPI_Interactable"
+  ],
+  "description": "Wall-mounted flush console for breaker resets, vent overrides, and auxiliary power.",
+  "components": [
+    {
+      "name": "DefaultSceneRoot",
+      "type": "USceneComponent",
+      "parent": null
+    },
+    {
+      "name": "PanelMesh",
+      "type": "UStaticMeshComponent",
+      "parent": "DefaultSceneRoot",
+      "mesh": "SM_Access_Panel",
+      "mobility": "Static"
+    },
+    {
+      "name": "IndicatorLight",
+      "type": "UPointLightComponent",
+      "parent": "PanelMesh",
+      "color": [
+        255,
+        30,
+        30
+      ],
+      "intensity": 800.0
+    },
+    {
+      "name": "InteractionBox",
+      "type": "UBoxComponent",
+      "parent": "DefaultSceneRoot",
+      "extent": [
+        80,
+        80,
+        120
+      ],
+      "collision_profile": "Trigger"
+    },
+    {
+      "name": "ClickAudio",
+      "type": "UAudioComponent",
+      "parent": "PanelMesh"
+    }
+  ],
+  "variables": [
+    {
+      "name": "IsActivated",
+      "type": "bool",
+      "default": false,
+      "replicated": true
+    },
+    {
+      "name": "InteractionEnabled",
+      "type": "bool",
+      "default": true,
+      "editable": true
+    },
+    {
+      "name": "PanelEventTag",
+      "type": "FName",
+      "default": "Panel_Power_Aux",
+      "editable": true
+    }
+  ],
+  "events": [
+    "OnInteract(AActor* Caller)",
+    "OnPanelTriggered(FName Tag)"
+  ]
+}

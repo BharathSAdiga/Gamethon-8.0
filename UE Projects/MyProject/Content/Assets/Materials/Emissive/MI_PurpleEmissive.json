@@ -1,0 +1,28 @@
+{
+  "path": [
+    "Emissive",
+    "MI_PurpleEmissive.json"
+  ],
+  "name": "MI_PurpleEmissive",
+  "type": "MasterMaterial",
+  "shading_model": "Unlit",
+  "blend_mode": "Opaque",
+  "two_sided": false,
+  "description": "Atmospheric purple neon bar accent lighting creating high-contrast cyberpunk color temperature.",
+  "parameters": {
+    "scalar": {
+      "EmissiveIntensity": 14.0
+    },
+    "vector": {
+      "EmissiveColor": [
+        0.85,
+        0.05,
+        0.95,
+        1.0
+      ]
+    },
+    "textures": {
+      "EmissiveMap": "/Game/Assets/Textures/Emissive/T_Cyberpunk_Neon_Lights_Emissive"
+    }
+  }
+}

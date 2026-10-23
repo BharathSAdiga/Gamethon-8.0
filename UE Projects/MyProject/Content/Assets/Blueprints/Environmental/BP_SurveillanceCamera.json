@@ -1,0 +1,82 @@
+{
+  "category": "Environmental",
+  "name": "BP_SurveillanceCamera",
+  "parent_class": "Actor",
+  "description": "Environmental security camera prop with sweeping volumetric light cone and alert state.",
+  "components": [
+    {
+      "name": "DefaultSceneRoot",
+      "type": "USceneComponent",
+      "parent": null
+    },
+    {
+      "name": "CameraMount",
+      "type": "UStaticMeshComponent",
+      "parent": "DefaultSceneRoot",
+      "mobility": "Static"
+    },
+    {
+      "name": "SwivelRoot",
+      "type": "USceneComponent",
+      "parent": "CameraMount",
+      "mobility": "Movable"
+    },
+    {
+      "name": "CameraHousingMesh",
+      "type": "UStaticMeshComponent",
+      "parent": "SwivelRoot",
+      "mesh": "SM_SurveillanceCamera",
+      "mobility": "Movable"
+    },
+    {
+      "name": "VisionSpotLight",
+      "type": "USpotLightComponent",
+      "parent": "SwivelRoot",
+      "color": [
+        0,
+        215,
+        255
+      ],
+      "intensity": 2500.0,
+      "inner_cone": 25.0,
+      "outer_cone": 45.0
+    },
+    {
+      "name": "CameraAudio",
+      "type": "UAudioComponent",
+      "parent": "CameraHousingMesh"
+    },
+    {
+      "name": "SweepTimeline",
+      "type": "UTimelineComponent",
+      "parent": null,
+      "length": 4.0,
+      "curve": "PingPong"
+    }
+  ],
+  "variables": [
+    {
+      "name": "RotationSpeed",
+      "type": "float",
+      "default": 25.0,
+      "editable": true
+    },
+    {
+      "name": "SweepAngleMax",
+      "type": "float",
+      "default": 60.0,
+      "editable": true
+    },
+    {
+      "name": "IsActive",
+      "type": "bool",
+      "default": true,
+      "editable": true
+    }
+  ],
+  "events": [
+    "EventBeginPlay()",
+    "DisableCamera()",
+    "TriggerAlert(bool bAlert)"
+  ]
+}

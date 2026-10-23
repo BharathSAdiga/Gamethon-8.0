@@ -1,0 +1,28 @@
+{
+  "path": [
+    "Emissive",
+    "MI_CyanEmissive.json"
+  ],
+  "name": "MI_CyanEmissive",
+  "type": "MasterMaterial",
+  "shading_model": "Unlit",
+  "blend_mode": "Opaque",
+  "two_sided": false,
+  "description": "High-intensity cyan tech indicator and conduit glow for active interactive consoles.",
+  "parameters": {
+    "scalar": {
+      "EmissiveIntensity": 15.0
+    },
+    "vector": {
+      "EmissiveColor": [
+        0.0,
+        0.9,
+        1.0,
+        1.0
+      ]
+    },
+    "textures": {
+      "EmissiveMap": "/Game/Assets/Textures/Emissive/T_Cyberpunk_Neon_Lights_Emissive"
+    }
+  }
+}

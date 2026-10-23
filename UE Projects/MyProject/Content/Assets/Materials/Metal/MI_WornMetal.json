@@ -1,0 +1,33 @@
+{
+  "path": [
+    "Metal",
+    "MI_WornMetal.json"
+  ],
+  "name": "MI_WornMetal",
+  "parent": "M_IndustrialMetal_Master",
+  "type": "MaterialInstance",
+  "description": "Scratched gunmetal with visible edge scuffs for corridors and structural columns.",
+  "parameters": {
+    "scalar": {
+      "MetallicMultiplier": 0.88,
+      "RoughnessMultiplier": 1.25,
+      "NormalStrength": 1.2,
+      "EmissiveIntensity": 0.0,
+      "UVTile": 1.0
+    },
+    "vector": {
+      "BaseColorTint": [
+        0.12,
+        0.14,
+        0.18,
+        1.0
+      ]
+    },
+    "textures": {
+      "BaseColorMap": "/Game/Assets/Textures/BaseColor/T_Cyberpunk_Pipes_Conduit_BaseColor",
+      "NormalMap": "/Game/Assets/Textures/Normal/T_Cyberpunk_Pipes_Conduit_Normal",
+      "RoughnessMap": "/Game/Assets/Textures/Roughness/T_Cyberpunk_Pipes_Conduit_Roughness",
+      "MetallicMap": "/Game/Assets/Textures/Metallic/T_Cyberpunk_Pipes_Conduit_Metallic"
+    }
+  }
+}

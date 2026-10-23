@@ -1,0 +1,28 @@
+{
+  "path": [
+    "Emissive",
+    "MI_RedWarningEmissive.json"
+  ],
+  "name": "MI_RedWarningEmissive",
+  "type": "MasterMaterial",
+  "shading_model": "Unlit",
+  "blend_mode": "Opaque",
+  "two_sided": false,
+  "description": "Pulsing red alarm and security lock beacon for the Level 1 exit blast gate.",
+  "parameters": {
+    "scalar": {
+      "EmissiveIntensity": 18.0
+    },
+    "vector": {
+      "EmissiveColor": [
+        1.0,
+        0.03,
+        0.03,
+        1.0
+      ]
+    },
+    "textures": {
+      "EmissiveMap": "/Game/Assets/Textures/Emissive/T_Cyberpunk_Neon_Lights_Emissive"
+    }
+  }
+}

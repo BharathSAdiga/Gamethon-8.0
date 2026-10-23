@@ -1,0 +1,32 @@
+{
+  "path": [
+    "Concrete",
+    "MI_DarkConcrete.json"
+  ],
+  "name": "MI_DarkConcrete",
+  "parent": "M_IndustrialMetal_Master",
+  "type": "MaterialInstance",
+  "description": "Reinforced dark blue-grey brutalist concrete for subfloors, elevator foundations, and loadbearing pilasters.",
+  "parameters": {
+    "scalar": {
+      "MetallicMultiplier": 0.05,
+      "RoughnessMultiplier": 1.45,
+      "NormalStrength": 1.5,
+      "EmissiveIntensity": 0.0,
+      "UVTile": 2.0
+    },
+    "vector": {
+      "BaseColorTint": [
+        0.1,
+        0.12,
+        0.15,
+        1.0
+      ]
+    },
+    "textures": {
+      "BaseColorMap": "/Game/Assets/Textures/BaseColor/T_Cyberpunk_Floor_Grate_BaseColor",
+      "NormalMap": "/Game/Assets/Textures/Normal/T_Cyberpunk_Floor_Grate_Normal",
+      "RoughnessMap": "/Game/Assets/Textures/Roughness/T_Cyberpunk_Floor_Grate_Roughness"
+    }
+  }
+}

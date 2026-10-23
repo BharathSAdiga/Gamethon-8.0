@@ -1,0 +1,42 @@
+{
+  "path": [
+    "MasterMaterials",
+    "M_IndustrialMetal_Master.json"
+  ],
+  "name": "M_IndustrialMetal_Master",
+  "type": "MasterMaterial",
+  "shading_model": "DefaultLit",
+  "blend_mode": "Opaque",
+  "two_sided": false,
+  "description": "Primary architectural and industrial master shader for Sector 09 with metallic, roughness, and normal inputs.",
+  "parameters": {
+    "scalar": {
+      "MetallicMultiplier": 1.0,
+      "RoughnessMultiplier": 1.0,
+      "NormalStrength": 1.0,
+      "EmissiveIntensity": 0.0,
+      "UVTile": 1.0
+    },
+    "vector": {
+      "BaseColorTint": [
+        0.85,
+        0.9,
+        0.95,
+        1.0
+      ],
+      "EmissiveTint": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    "textures": {
+      "BaseColorMap": "/Game/Assets/Textures/BaseColor/T_Cyberpunk_Wall_Panel_BaseColor",
+      "NormalMap": "/Game/Assets/Textures/Normal/T_Cyberpunk_Wall_Panel_Normal",
+      "RoughnessMap": "/Game/Assets/Textures/Roughness/T_Cyberpunk_Wall_Panel_Roughness",
+      "MetallicMap": "/Game/Assets/Textures/Metallic/T_Cyberpunk_Wall_Panel_Metallic",
+      "EmissiveMap": "/Game/Assets/Textures/Emissive/T_Cyberpunk_Wall_Panel_Emissive"
+    }
+  }
+}

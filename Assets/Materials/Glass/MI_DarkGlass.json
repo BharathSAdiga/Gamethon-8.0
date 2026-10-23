@@ -1,0 +1,28 @@
+{
+  "path": [
+    "Glass",
+    "MI_DarkGlass.json"
+  ],
+  "name": "MI_DarkGlass",
+  "type": "MasterMaterial",
+  "shading_model": "DefaultLit",
+  "blend_mode": "Translucent",
+  "two_sided": true,
+  "description": "Heavy tinted bullet-resistant observation window glass overlooking Sector 09 cyberpunk megacity.",
+  "parameters": {
+    "scalar": {
+      "MetallicMultiplier": 0.3,
+      "RoughnessMultiplier": 0.08,
+      "Opacity": 0.45,
+      "Refraction": 1.33
+    },
+    "vector": {
+      "BaseColorTint": [
+        0.03,
+        0.08,
+        0.12,
+        1.0
+      ]
+    }
+  }
+}

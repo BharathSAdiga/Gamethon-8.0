@@ -1,0 +1,88 @@
+{
+  "category": "Interactive",
+  "name": "BP_ControlTerminal",
+  "parent_class": "Actor",
+  "implemented_interfaces": [
+    "BPI_Interactable"
+  ],
+  "description": "Interactive cyberpunk hacking and security clearance console linked to BP_LockedGate.",
+  "components": [
+    {
+      "name": "DefaultSceneRoot",
+      "type": "USceneComponent",
+      "parent": null
+    },
+    {
+      "name": "TerminalBody",
+      "type": "UStaticMeshComponent",
+      "parent": "DefaultSceneRoot",
+      "mesh": "SM_ControlTerminal",
+      "mobility": "Static"
+    },
+    {
+      "name": "ScreenMesh",
+      "type": "UStaticMeshComponent",
+      "parent": "TerminalBody",
+      "mesh": "SM_Monitor_Screen",
+      "mobility": "Static"
+    },
+    {
+      "name": "StatusLight",
+      "type": "UPointLightComponent",
+      "parent": "ScreenMesh",
+      "color": [
+        0,
+        220,
+        255
+      ],
+      "intensity": 1800.0
+    },
+    {
+      "name": "InteractionCollision",
+      "type": "USphereComponent",
+      "parent": "TerminalBody",
+      "radius": 120.0,
+      "collision_profile": "Trigger"
+    },
+    {
+      "name": "TerminalWidget",
+      "type": "UWidgetComponent",
+      "parent": "ScreenMesh"
+    },
+    {
+      "name": "KeypadAudio",
+      "type": "UAudioComponent",
+      "parent": "TerminalBody"
+    }
+  ],
+  "variables": [
+    {
+      "name": "IsActive",
+      "type": "bool",
+      "default": true,
+      "editable": true
+    },
+    {
+      "name": "IsGateUnlocked",
+      "type": "bool",
+      "default": false,
+      "replicated": true
+    },
+    {
+      "name": "TargetGateRef",
+      "type": "TSoftObjectPtr<ABP_LockedGate>",
+      "default": null,
+      "editable": true
+    },
+    {
+      "name": "TerminalID",
+      "type": "FName",
+      "default": "TERM_GATE_09",
+      "editable": true
+    }
+  ],
+  "events": [
+    "OnInteract(AActor* Caller)",
+    "OnSecurityOverrideComplete()"
+  ]
+}

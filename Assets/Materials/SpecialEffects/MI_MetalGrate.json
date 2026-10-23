@@ -1,0 +1,33 @@
+{
+  "path": [
+    "SpecialEffects",
+    "MI_MetalGrate.json"
+  ],
+  "name": "MI_MetalGrate",
+  "parent": "M_IndustrialMetal_Master",
+  "type": "MaterialInstance",
+  "blend_mode": "Masked",
+  "two_sided": true,
+  "description": "Perforated hexagonal catwalk grating allowing atmospheric light and steam shafts to pass through.",
+  "parameters": {
+    "scalar": {
+      "MetallicMultiplier": 1.0,
+      "RoughnessMultiplier": 0.7,
+      "NormalStrength": 1.0,
+      "OpacityMaskClipValue": 0.33
+    },
+    "vector": {
+      "BaseColorTint": [
+        0.15,
+        0.17,
+        0.2,
+        1.0
+      ]
+    },
+    "textures": {
+      "BaseColorMap": "/Game/Assets/Textures/BaseColor/T_Cyberpunk_Floor_Grate_BaseColor",
+      "NormalMap": "/Game/Assets/Textures/Normal/T_Cyberpunk_Floor_Grate_Normal",
+      "MaskMap": "/Game/Assets/Textures/Masks/T_Mask_Hexagon_Grate"
+    }
+  }
+}

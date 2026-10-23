@@ -1,0 +1,31 @@
+{
+  "path": [
+    "Glass",
+    "MI_ScreenGlass.json"
+  ],
+  "name": "MI_ScreenGlass",
+  "type": "MasterMaterial",
+  "shading_model": "DefaultLit",
+  "blend_mode": "Translucent",
+  "two_sided": false,
+  "description": "Cyberpunk terminal monitor display glass with phosphor scanlines and biometric GUI readouts.",
+  "parameters": {
+    "scalar": {
+      "EmissiveIntensity": 10.0,
+      "RoughnessMultiplier": 0.15,
+      "Opacity": 0.85
+    },
+    "vector": {
+      "EmissiveColor": [
+        0.05,
+        0.85,
+        0.7,
+        1.0
+      ]
+    },
+    "textures": {
+      "BaseColorMap": "/Game/Assets/Textures/BaseColor/T_Cyberpunk_Terminal_Console_BaseColor",
+      "EmissiveMap": "/Game/Assets/Textures/Emissive/T_Cyberpunk_Terminal_Console_Emissive"
+    }
+  }
+}

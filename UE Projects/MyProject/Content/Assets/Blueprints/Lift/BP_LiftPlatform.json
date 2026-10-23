@@ -1,0 +1,86 @@
+{
+  "category": "Lift",
+  "name": "BP_LiftPlatform",
+  "parent_class": "Actor",
+  "description": "Elevator platform inside Sector 09 vertical shaft with safety railings and audio cues.",
+  "components": [
+    {
+      "name": "DefaultSceneRoot",
+      "type": "USceneComponent",
+      "parent": null
+    },
+    {
+      "name": "TopPositionScene",
+      "type": "USceneComponent",
+      "parent": "DefaultSceneRoot"
+    },
+    {
+      "name": "PlatformMesh",
+      "type": "UStaticMeshComponent",
+      "parent": "DefaultSceneRoot",
+      "mesh": "SM_LiftPlatform",
+      "mobility": "Movable"
+    },
+    {
+      "name": "Railings",
+      "type": "UStaticMeshComponent",
+      "parent": "PlatformMesh",
+      "mesh": "SM_Railing_Straight",
+      "mobility": "Movable"
+    },
+    {
+      "name": "UnderglowLight",
+      "type": "UPointLightComponent",
+      "parent": "PlatformMesh",
+      "color": [
+        0,
+        220,
+        255
+      ],
+      "intensity": 2500.0
+    },
+    {
+      "name": "LiftAudio",
+      "type": "UAudioComponent",
+      "parent": "PlatformMesh"
+    },
+    {
+      "name": "LiftMovementTimeline",
+      "type": "UTimelineComponent",
+      "parent": null,
+      "length": 5.0,
+      "curve": "HermiteSmooth"
+    }
+  ],
+  "variables": [
+    {
+      "name": "IsAtBottom",
+      "type": "bool",
+      "default": true,
+      "replicated": true
+    },
+    {
+      "name": "IsMoving",
+      "type": "bool",
+      "default": false,
+      "replicated": true
+    },
+    {
+      "name": "TravelDistance",
+      "type": "float",
+      "default": 1200.0,
+      "editable": true
+    },
+    {
+      "name": "TravelDuration",
+      "type": "float",
+      "default": 5.0,
+      "editable": true
+    }
+  ],
+  "events": [
+    "CallLift()",
+    "OnLiftDeparted(bool bWasAtBottom)",
+    "OnLiftArrived(bool bIsAtBottom)"
+  ]
+}
