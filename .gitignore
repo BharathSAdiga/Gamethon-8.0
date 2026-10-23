@@ -2,15 +2,15 @@
 #  Gamethon 8.0 — .gitignore
 # ============================================================
 
-# ─── Unreal Engine Installation (do NOT commit, 60GB+) ──────
+# Unreal Engine Installation
 /UE_5.6/
 /UE_*/
 
-# ─── Template/Prototype UE Projects (not our game) ──────────
-"UE Projects/MyProject/"
-"UE Projects/MyProject2/"
+# Template projects - not our game
+UE Projects/MyProject/
+UE Projects/MyProject2/
 
-# ─── UE Project Build & Cache Directories ───────────────────
+# UE Build & Cache
 **/Intermediate/
 **/DerivedDataCache/
 **/Saved/
@@ -19,7 +19,7 @@
 **/__ExternalActors__/
 **/__ExternalObjects__/
 
-# ─── UE Generated/IDE Files ─────────────────────────────────
+# UE Generated/IDE files
 *.opensdf
 *.sdf
 *.sln
@@ -27,23 +27,21 @@
 *.aps
 *.xcodeproj
 *.xcworkspace
-
-# ─── Visual Studio / IDE ────────────────────────────────────
 **/.vs/
 **/.idea/
 **/*.vcxproj*
 **/.vscode/
 
-# ─── Blender Temp / Autosave ────────────────────────────────
+# Blender temp/autosave
 *.blend1
 *.blend2
 **/__pycache__/
 **/*.pyc
 
-# ─── Duplicate raw Environments folder (moved to Assets/) ───
+# Duplicate old folder
 /Environments/
 
-# ─── System / OS ────────────────────────────────────────────
+# System files
 Thumbs.db
 .DS_Store
 desktop.ini
@@ -51,6 +49,6 @@ desktop.ini
 *.temp
 *.log
 
-# ─── Packaging Output ───────────────────────────────────────
+# Packaging
 **/Package/
 **/PackagedBuilds/
