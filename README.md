@@ -19,12 +19,14 @@ unreal engine/
 │           └── Variant_Platforming/ ← Platforming character and mechanics
 │
 ├── Assets/                      ← Raw / source art assets
-│   ├── Images/                  ← 2D images, sprites, SECTOR09 level assets
+│   ├── Level_1/                 ← 56 Unreal-ready Level 1 modular FBX assets & catalog
+│   ├── Images/                  ← 2D images, sprites, SECTOR09 reference crops
 │   ├── Game_Assets/             ← Prefabs, props, and asset packs
 │   ├── Backgrounds/             ← 2D background images (City, Railway, etc.)
 │   ├── Concepts/                ← Concept art (Characters, Environments, UI)
 │   ├── Reference/               ← Art and technical references
 │   └── Exports/                 ← Final exports
+
 │
 ├── Blender/                     ← Blender source files
 │   ├── Characters/

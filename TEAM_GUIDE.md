@@ -28,11 +28,13 @@ A quick reference for every team member. Read this before adding anything to the
 ### If you have raw assets, concept art, or reference images
 | What | Where |
 |---|---|
+| Level 1 3D modular assets (FBX) | `Assets/Level_1/` |
 | Asset images / sprites / decals | `Assets/Images/` |
 | Game assets / props / prefabs | `Assets/Game_Assets/` |
 | Concept art | `Assets/Concepts/` |
 | Reference images | `Assets/Reference/` |
 | Background images (raw) | `Assets/Backgrounds/` |
+
 
 
 ---
